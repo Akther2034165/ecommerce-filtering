@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce Filtering</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.23/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
+        <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content flex flex-col flex-wrap lg:flex-row items-center">
+            <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+            {% if products %}
+            {% for product in products %}
+            <div class="p-5">
+                <div class="card w-96 bg-base-100 shadow-xl">
+                    <figure><img class="h-[320px]" src="{{product.image.url}}" alt="Shoes" />
+                    </figure>
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            {{product.product_name}}
+                            <div class="badge badge-secondary">{{product.price}} /-</div>
+                        </h2>
+                        <p>Seller : {{product.seller}} </p>
+                        <div class="card-actions justify-end">
+                            <div class="badge badge-outline">{{product.brand}}</div>
+                            <div class="badge badge-outline">{{product.category}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1 class="ml-5 uppercase fs-5">No Products To Show</h1>
+            {% endif %}
+        </div>
+        <div class="drawer-side">
+            <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
+            <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                <li>
+                    <p class="uppercase font-bold">Price Range</p>
+                    <div class="flex">
+                        <form action="" method="get" class="search">
+                            <input type="number" placeholder="From" name="minPrice"
+                                class="input input-bordered w-full max-w-xs" />
+                            <input type="number" placeholder="To" name="maxPrice"
+                                class="input input-bordered w-full max-w-xs" />
+                            <button class="btn btn-active btn-ghost" type="submit">Price</button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <p class="uppercase font-bold">Brand</p>
+                    {% for brand in brands %}
+                    <div class="hover:text-secondary">
+                        <label class="flex justify-center items-center">
+                            <input type="checkbox" name="brands" class=" checkbox mr-2" />
+                        </label>
+                        <a href="{% url 'productbybrand' brand.slug %}" class="brands"> {{brand.brand_name}}</a>
+                    </div>
+                    {% endfor %}
+                </li>
+                <li>
+                    <p class="uppercase font-bold">Categories</p>
+                    {% for category in categories %}
+                    <div class="hover:text-secondary">
+                        <label class="flex justify-center items-center">
+                            <input type="checkbox" name="category" class=" checkbox mr-2" />
+                        </label>
+                        <a href="{% url 'productbycat' category.slug %}" class="category">
+                            {{category.category_name}}</a>
+                    </div>
+                    {% endfor %}
+                </li>
+                <li>
+                    <p class="uppercase font-bold">Warranties</p>
+                    {% for warranty in warranties %}
+                    <div class="hover:text-secondary">
+                        <label class="flex justify-center items-center">
+                            <input type="checkbox" name="warranty" class=" checkbox mr-2" />
+                        </label>
+                        <a href="{% url 'productbywarranty' warranty.slug %}" class="warranty">
+                            {{warranty.warranty_type}}</a>
+                    </div>
+                    {% endfor %}
+                </li>
+                <li>
+                    <p class="uppercase font-bold">Sellers</p>
+                    {% for seller in sellers %}
+                    <div class="hover:text-secondary">
+                        <label class="flex justify-center items-center">
+                            <input type="checkbox" name="seller" class=" checkbox mr-2" />
+                            <a href="{% url 'productbyseller' seller.slug %}" class="seller"> {{seller.seller_name}}</a>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.brands').forEach(function (anchor) {
+            anchor.addEventListener('click', function (event) {
+                var checkbox = event.currentTarget.parentNode.querySelector('.checkbox');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+        document.querySelectorAll('.seller').forEach(function (anchor) {
+            anchor.addEventListener('click', function (event) {
+                var checkbox = event.currentTarget.parentNode.querySelector('.checkbox');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+        document.querySelectorAll('.category').forEach(function (anchor) {
+            anchor.addEventListener('click', function (event) {
+                var checkbox = event.currentTarget.parentNode.querySelector('.checkbox');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+        document.querySelectorAll('.warranty').forEach(function (anchor) {
+            anchor.addEventListener('click', function (event) {
+                var checkbox = event.currentTarget.parentNode.querySelector('.checkbox');
+                checkbox.checked = !checkbox.checked;
+            });
+        });
+
+    });
+</script>
+
+</html>
