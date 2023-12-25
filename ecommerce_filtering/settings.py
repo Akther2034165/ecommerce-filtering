@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-npx*xtbxk1b(q!#%%%r-%p@llv)z+!vx@g@r25+2-xtjd0g8sn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app', 'now.sh', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -76,9 +76,13 @@ WSGI_APPLICATION = 'ecommerce_filtering.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'bCFCAD4eeF3fgbBGFa51e6g3bGEdcBeb',
+        'HOST': 'monorail.proxy.rlwy.net',
+        'PORT': '49724',
+        }
 }
 
 
